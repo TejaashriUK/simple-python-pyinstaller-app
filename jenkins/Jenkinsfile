@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -32,8 +33,10 @@ pipeline {
 
         stage('Deliver') {
             steps {
-                bat 'if exist dist rmdir /S /Q dist'
-                bat '"%PYTHON%" -m PyInstaller --clean --noconfirm --onefile --name myapp --distpath "%WORKSPACE%\\output" sources/add2vals.py'
+                bat 'if exist "C:\\JenkinsBuild\\myapp.exe" del /F /Q "C:\\JenkinsBuild\\myapp.exe"'
+                bat '"%PYTHON%" -m PyInstaller --clean --noconfirm --onefile --name myapp --distpath "C:\\JenkinsBuild" sources/add2vals.py'
+                bat 'if not exist output mkdir output'
+                bat 'copy /Y "C:\\JenkinsBuild\\myapp.exe" "output\\myapp.exe"'
             }
 
             post {
@@ -44,3 +47,4 @@ pipeline {
         }
     }
 }
+```
