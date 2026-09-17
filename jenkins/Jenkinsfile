@@ -38,7 +38,7 @@ pipeline {
 
                 bat 'if exist "C:\\JenkinsBuild\\myapp.zip" del /F /Q "C:\\JenkinsBuild\\myapp.zip"'
 
-                bat 'powershell -Command "Compress-Archive -Path C:\\JenkinsBuild\\myapp -DestinationPath C:\\JenkinsBuild\\myapp.zip -Force"'
+                bat '"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "Compress-Archive -Path C:\\JenkinsBuild\\myapp -DestinationPath C:\\JenkinsBuild\\myapp.zip -Force"'
 
                 bat 'copy /Y "C:\\JenkinsBuild\\myapp.zip" "myapp.zip"'
             }
