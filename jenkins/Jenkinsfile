@@ -33,12 +33,19 @@ pipeline {
         stage('Deliver') {
             steps {
                 bat 'if exist "C:\\JenkinsBuild\\myapp" rmdir /S /Q "C:\\JenkinsBuild\\myapp"'
+
                 bat '"%PYTHON%" -m PyInstaller --clean --noconfirm --name myapp --distpath "C:\\JenkinsBuild" sources/add2vals.py'
+
+                bat 'if exist "C:\\JenkinsBuild\\myapp.zip" del /F /Q "C:\\JenkinsBuild\\myapp.zip"'
+
+                bat 'powershell -Command "Compress-Archive -Path ''C:\\JenkinsBuild\\myapp'' -DestinationPath ''C:\\JenkinsBuild\\myapp.zip'' -Force"'
+
+                bat 'copy /Y "C:\\JenkinsBuild\\myapp.zip" "myapp.zip"'
             }
 
             post {
                 success {
-                    archiveArtifacts artifacts: 'C:/JenkinsBuild/myapp/**/*', allowEmptyArchive: false
+                    archiveArtifacts artifacts: 'myapp.zip', allowEmptyArchive: false
                 }
             }
         }
