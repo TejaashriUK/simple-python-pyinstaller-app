@@ -33,12 +33,12 @@ pipeline {
         stage('Deliver') {
             steps {
                 bat 'if exist dist rmdir /S /Q dist'
-                bat '"%PYTHON%" -m PyInstaller --clean --noconfirm --onefile --distpath "%WORKSPACE%\\output" sources/add2vals.py'
+                bat '"%PYTHON%" -m PyInstaller --clean --noconfirm --onefile --name myapp --distpath "%WORKSPACE%\\output" sources/add2vals.py'
             }
 
             post {
                 success {
-                    archiveArtifacts 'output/add2vals.exe'
+                    archiveArtifacts 'output/myapp.exe'
                 }
             }
         }
